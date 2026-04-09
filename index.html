@@ -11,6 +11,7 @@
             --accent-blue: #a3c4f3;
             --border-color: #21262d;
             --text-dim: #8b949e;
+            --side-width: 75px;
         }
 
         body {
@@ -23,185 +24,210 @@
             overflow: hidden;
         }
 
-        /* --- THE LOGO (Planet with Diagonal Ring) --- */
+        /* --- LOGO --- */
         .planet {
-            width: 40px;
-            height: 40px;
+            width: 42px; height: 42px;
             background: radial-gradient(circle at 30% 30%, #d9e7ff, #5da2f5);
-            border: 3px solid #ffffff;
-            border-radius: 50%;
-            position: relative;
-            box-shadow: 0 0 15px rgba(163, 196, 243, 0.3);
+            border: 3px solid #ffffff; border-radius: 50%;
+            position: relative; box-shadow: 0 0 15px rgba(163, 196, 243, 0.3);
             flex-shrink: 0;
         }
         .planet::before {
             content: ''; position: absolute; top: 50%; left: 50%;
-            width: 55px; height: 12px;
+            width: 58px; height: 13px;
             border: 4px solid var(--accent-blue); border-radius: 50%;
             transform: translate(-50%, -50%) rotate(-30deg);
         }
 
-        /* --- DESKTOP SIDEBAR (Based on image_2e616b.png) --- */
+        /* --- LAYOUT COLS --- */
         .side-col {
-            width: 75px;
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 0;
-            background: var(--bg-black);
-            justify-content: space-between;
+            width: var(--side-width); border-right: 1px solid var(--border-color);
+            display: flex; flex-direction: column; align-items: center;
+            padding: 25px 0; background: var(--bg-black); justify-content: space-between;
         }
 
-        /* --- MOBILE FOOTER (Based on image_2f27e2.png) --- */
         .bottom-nav {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            height: 70px;
-            background: var(--bg-black);
-            border-top: 1px solid var(--border-color);
-            display: none; /* Hidden by default */
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 30px;
-            z-index: 2000;
+            position: fixed; bottom: 0; left: 0; right: 0; height: 75px;
+            background: var(--bg-black); border-top: 1px solid var(--border-color);
+            display: none; align-items: center; justify-content: space-between;
+            padding: 0 30px; z-index: 2000;
         }
 
-        /* --- MAIN LAYOUT --- */
         .main-col { flex: 1; overflow-y: auto; background: var(--main-bg); position: relative; }
+        
         .r34-header {
-            padding: 15px 25px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            gap: 12px;
-            position: sticky; top: 0;
-            background: rgba(13, 17, 23, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
+            padding: 15px 25px; border-bottom: 1px solid var(--border-color);
+            display: flex; align-items: center; gap: 15px;
+            position: sticky; top: 0; background: rgba(13, 17, 23, 0.96);
+            backdrop-filter: blur(10px); z-index: 1000;
         }
 
-        .search-wrapper { flex: 1; position: relative; }
+        .search-wrapper { flex: 1; position: relative; min-width: 0; }
+        
         input#tagInput {
-            width: 100%; padding: 12px 15px;
+            width: 100%; padding: 12px 18px;
             background: var(--bg-black); border: 1px solid var(--border-color);
-            color: white; border-radius: 8px; font-size: 16px; box-sizing: border-box;
+            color: white; border-radius: 10px; font-size: 16px; box-sizing: border-box;
+            outline: none;
         }
+        input#tagInput:focus { border-color: var(--accent-blue); }
+        
         button#searchBtn {
             background: var(--accent-blue); color: var(--bg-black);
-            border: none; border-radius: 8px; font-weight: 800;
-            padding: 0 20px; cursor: pointer;
+            border: none; border-radius: 10px; font-weight: 800;
+            padding: 12px 25px; cursor: pointer; white-space: nowrap;
         }
 
-        /* --- CONTENT & ADS --- */
+        /* --- BETTER AUTOFILL --- */
+        #autocomplete-list {
+            position: absolute; width: 100%; background: #161b22; 
+            border: 1px solid var(--accent-blue); border-radius: 0 0 12px 12px;
+            display: none; max-height: 300px; overflow-y: auto; z-index: 1001;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .suggestion { 
+            padding: 14px 18px; cursor: pointer; border-bottom: 1px solid var(--border-color); 
+            font-size: 14px; transition: background 0.2s;
+        }
+        .suggestion:last-child { border-bottom: none; }
+        .suggestion:hover, .suggestion:active { background: #1c2128; color: var(--accent-blue); }
+
+        /* --- CONTENT --- */
         .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px; padding: 20px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px; padding: 25px;
         }
         .ad-zone {
-            background: rgba(163, 196, 243, 0.05); border: 1px dashed var(--border-color);
-            margin: 20px auto; display: flex; align-items: center; justify-content: center;
-            color: var(--text-dim); font-size: 11px;
+            background: rgba(163, 196, 243, 0.04); border: 1px dashed var(--border-color);
+            margin: 15px auto; display: flex; align-items: center; justify-content: center;
+            color: var(--text-dim); font-size: 11px; text-transform: uppercase;
         }
-        .ad-top { width: 90%; height: 90px; }
+        .ad-top { width: 95%; height: 90px; }
 
-        /* --- SETTINGS MODAL --- */
         .modal {
-            display: none; position: fixed; z-index: 3000;
+            display: none; position: fixed; z-index: 3001;
             background: var(--main-bg); border: 2px solid var(--accent-blue);
-            padding: 20px; border-radius: 15px; width: 260px;
+            padding: 20px; border-radius: 15px; width: 280px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.9);
         }
 
-        /* --- RESPONSIVE STATE --- */
+        /* --- HYBRID STATES --- */
         body.is-mobile .side-col { display: none; }
         body.is-mobile .bottom-nav { display: flex; }
-        body.is-mobile .main-col { padding-bottom: 80px; }
+        body.is-mobile .main-col { padding-bottom: 90px; }
         body.is-mobile .modal { bottom: 85px; left: 50%; transform: translateX(-50%); }
-        body.is-desktop .modal { bottom: 80px; left: 85px; }
+        body.is-desktop .modal { bottom: 25px; left: 85px; }
 
-        /* Card Styling */
-        .card { background: #161b22; border-radius: 12px; border: 1px solid var(--border-color); overflow: hidden; }
-        .media-wrap { height: 350px; background: #000; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .card { background: #161b22; border-radius: 15px; border: 1px solid var(--border-color); overflow: hidden; }
+        .media-wrap { height: 380px; background: #000; display: flex; align-items: center; justify-content: center; }
         img, video { max-width: 100%; max-height: 100%; opacity: 0; transition: opacity 0.5s; }
         .loaded { opacity: 1; }
-        .tags-label { padding: 10px; font-size: 10px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .tags-label { padding: 12px; font-size: 10px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     </style>
 </head>
 <body>
 
     <div class="side-col" id="desktopNav">
         <div class="planet"></div>
-        <div id="status" style="font-size: 10px; color: var(--accent-blue); font-weight: bold; text-align: center;">NEBULA</div>
-        <button id="openSettings" style="background:none; border:none; color:var(--text-dim); font-size: 28px; cursor:pointer;">⚙</button>
+        <div id="status" style="font-size: 10px; color: var(--accent-blue); font-weight: bold;">NEBULA</div>
+        <button id="openSettings" style="background:none; border:none; color:var(--text-dim); font-size: 30px; cursor:pointer;">⚙</button>
     </div>
 
     <div class="main-col">
         <header class="r34-header">
             <div class="search-wrapper">
-                <input type="text" id="tagInput" placeholder="Explore Nebula..." autocomplete="off">
-                <div id="autocomplete-list" style="position:absolute; width:100%; background:var(--main-bg); border:1px solid var(--accent-blue); display:none; max-height:200px; overflow-y:auto; z-index:1001;"></div>
+                <input type="text" id="tagInput" placeholder="Enter tags..." autocomplete="off" spellcheck="false">
+                <div id="autocomplete-list"></div>
             </div>
             <button id="searchBtn">SEARCH</button>
         </header>
 
-        <div class="ad-zone ad-top">Broadcast Space (Banner)</div>
+        <div class="ad-zone ad-top">Advertisement Space</div>
         <div id="results" class="gallery"></div>
     </div>
 
     <div class="bottom-nav" id="mobileNav">
-        <button id="openSettingsMobile" style="background:none; border:none; color:var(--accent-blue); font-weight:bold; cursor:pointer; font-size:16px;">SETTINGS</button>
+        <button id="openSettingsMobile" style="background:none; border:none; color:var(--accent-blue); font-weight:bold; cursor:pointer;">SETTINGS</button>
         <div class="planet"></div>
-        <div style="width: 70px;"></div> </div>
+        <div style="width: 70px;"></div>
+    </div>
 
     <div class="modal" id="settingsModal">
         <h3 style="margin-top:0; color:var(--accent-blue);">Nebula Options</h3>
-        <div style="margin-bottom:15px; font-size:13px;">
-            <label style="cursor:pointer;"><input type="checkbox" id="aiFilter"> Filter AI Generated</label>
-        </div>
-        <div style="margin-bottom:15px; font-size:13px;">
-            <label>Blacklist Tags:</label>
-            <input type="text" id="blacklistInput" style="width:100%; background:#000; color:white; border:1px solid #444; border-radius:4px; padding:8px; margin-top:5px; box-sizing:border-box;">
-        </div>
-        <button id="saveBtn" style="width:100%; background:var(--accent-blue); border:none; padding:10px; border-radius:8px; font-weight:bold; cursor:pointer;">APPLY</button>
+        <label style="cursor:pointer; font-size:14px; display:block; margin-bottom:10px;">
+            <input type="checkbox" id="aiFilter"> Filter AI Generated
+        </label>
+        <label style="font-size: 12px; color: var(--text-dim);">Blacklist:</label>
+        <input type="text" id="blacklistInput" placeholder="tags separated by space" style="width:100%; background:#000; color:white; border:1px solid #444; border-radius:8px; padding:10px; margin-top:5px; box-sizing:border-box;">
+        <button id="saveBtn" style="width:100%; background:var(--accent-blue); border:none; padding:12px; border-radius:10px; font-weight:bold; cursor:pointer; margin-top:15px;">SAVE</button>
     </div>
 
 <script>
     const uid = "6081594";
     const key = "a7b277d48f0b9564f03e283da3cb0b7bae5dd670f4e6529df10bfd18c1000ff9a3499f10f470dd1474fe9410f3b2b213d4b0416e923d0caa4587d4a8e7cb4c83";
 
-    // --- DEVICE DETECTION ---
     function checkDevice() {
-        const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        const isSmallScreen = window.innerWidth < 768;
-        
-        if (isMobileUA || isSmallScreen) {
-            document.body.classList.remove('is-desktop');
-            document.body.classList.add('is-mobile');
-        } else {
-            document.body.classList.remove('is-mobile');
-            document.body.classList.add('is-desktop');
-        }
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+        document.body.className = isMobile ? 'is-mobile' : 'is-desktop';
     }
     window.addEventListener('resize', checkDevice);
     checkDevice();
 
-    // --- SETTINGS LOGIC ---
     const modal = document.getElementById('settingsModal');
-    const toggleSettings = (e) => {
-        e.stopPropagation();
-        modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
-    };
-    document.getElementById('openSettings').onclick = toggleSettings;
-    document.getElementById('openSettingsMobile').onclick = toggleSettings;
+    const autoList = document.getElementById('autocomplete-list');
+    const tagInput = document.getElementById('tagInput');
+    
+    const toggleModal = (e) => { e.stopPropagation(); modal.style.display = modal.style.display === 'block' ? 'none' : 'block'; };
+    document.getElementById('openSettings').onclick = toggleModal;
+    document.getElementById('openSettingsMobile').onclick = toggleModal;
 
-    window.onclick = (e) => {
-        if (!modal.contains(e.target) && !e.target.id.includes('openSettings')) modal.style.display = 'none';
-        document.getElementById('autocomplete-list').style.display = 'none';
-    };
+    window.onclick = () => { modal.style.display = 'none'; autoList.style.display = 'none'; };
     modal.onclick = (e) => e.stopPropagation();
 
-    // --- SEARCH & FILTER ENGINE ---
+    // --- ENHANCED DEBOUNCED AUTOFILL ---
+    let debounceTimer;
+    tagInput.addEventListener('input', (e) => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            fetchAutocomplete();
+        }, 250); // 250ms debounce for smoother mobile performance
+    });
+
+    async function fetchAutocomplete() {
+        const words = tagInput.value.split(' ');
+        const query = words[words.length - 1];
+        
+        if (query.length < 2) { autoList.style.display = 'none'; return; }
+
+        try {
+            const resp = await fetch(`https://api.rule34.xxx/autocomplete.php?q=${query.toLowerCase()}`);
+            const data = await resp.json();
+            
+            if (!data || data.length === 0) { autoList.style.display = 'none'; return; }
+
+            autoList.innerHTML = '';
+            autoList.style.display = 'block';
+
+            data.forEach(s => {
+                const div = document.createElement('div');
+                div.className = 'suggestion';
+                div.textContent = s.value;
+                // Use 'touchend' for faster mobile response
+                const handleSelect = (ev) => {
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                    words[words.length - 1] = s.value;
+                    tagInput.value = words.join(' ') + ' ';
+                    autoList.style.display = 'none';
+                    tagInput.focus();
+                };
+                div.addEventListener('mousedown', handleSelect);
+                div.addEventListener('touchend', handleSelect);
+                autoList.appendChild(div);
+            });
+        } catch(err) { autoList.style.display = 'none'; }
+    }
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -216,41 +242,39 @@
 
     async function doSearch() {
         const config = JSON.parse(localStorage.getItem('nebulaConfig')) || { aiFilter: false, blacklist: "" };
-        let tags = document.getElementById('tagInput').value.trim();
+        let tags = tagInput.value.trim();
         if (config.aiFilter) tags += " -ai_generated";
-
+        
         const results = document.getElementById('results');
         results.innerHTML = '';
-        
+
         try {
-            const resp = await fetch(`https://api.rule34.xxx/index.php?page=dapi&s=post&q=index&json=1&limit=50&tags=${encodeURIComponent(tags)}&user_id=${uid}&api_key=${key}`);
+            const url = `https://api.rule34.xxx/index.php?page=dapi&s=post&q=index&json=1&limit=50&tags=${encodeURIComponent(tags)}&user_id=${uid}&api_key=${key}`;
+            const resp = await fetch(url);
             const data = await resp.json();
             
             const blacklist = config.blacklist.toLowerCase().split(' ').filter(t => t !== "");
             const filtered = data.filter(post => !blacklist.some(bad => post.tags.toLowerCase().includes(bad)));
 
             filtered.forEach(post => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                const wrap = document.createElement('div');
-                wrap.className = 'media-wrap';
-                
+                const card = document.createElement('div'); card.className = 'card';
+                const wrap = document.createElement('div'); wrap.className = 'media-wrap';
                 const isVideo = post.file_url.toLowerCase().match(/\.(mp4|webm)$/);
                 const media = document.createElement(isVideo ? 'video' : 'img');
                 media.dataset.src = post.file_url;
-                if(isVideo) { media.loop = true; media.muted = true; media.onclick = () => media.paused ? media.play() : media.pause(); }
+                if(isVideo) { media.loop = true; media.muted = true; media.setAttribute('playsinline', ''); media.onclick = () => media.paused ? media.play() : media.pause(); }
                 else { media.onclick = () => window.open(post.file_url); }
-                
                 observer.observe(media);
                 wrap.appendChild(media);
                 card.innerHTML = `<div class="tags-label">${post.tags}</div>`;
                 card.prepend(wrap);
                 results.appendChild(card);
             });
-        } catch(e) { console.error("Nebula Sync Error"); }
+        } catch(e) {}
     }
 
     document.getElementById('searchBtn').onclick = doSearch;
+    tagInput.onkeypress = (e) => { if(e.key==='Enter') { autoList.style.display = 'none'; doSearch(); } };
     document.getElementById('saveBtn').onclick = () => {
         const cfg = { aiFilter: document.getElementById('aiFilter').checked, blacklist: document.getElementById('blacklistInput').value };
         localStorage.setItem('nebulaConfig', JSON.stringify(cfg));
